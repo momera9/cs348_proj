@@ -1,0 +1,119 @@
+/* add_show_style.css */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+#header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: #ffffff;
+    padding: 10px;
+}
+
+#header img {
+    max-height: 100px; 
+}
+
+#watchlist-title {
+    color: #000000;
+    margin-left: 20px; 
+}
+
+#divider-bar {
+    display: flex;
+    justify-content: space-between;
+    background-color: #e0e0e0; 
+    padding: 10px;
+}
+
+#show-name {
+    color: #000000;
+    font-weight: bold;
+}
+
+#edit-show-button,
+#delete-show-button {
+    background-color: #666666;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+#add-show-button {
+    background-color: #666666;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    float: right;
+}
+
+.container {
+    max-width: 1;
+    padding-left: 100px;
+    padding-right: 100px;
+    margin: 50px auto;
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+}
+
+.left-box {
+    width: 48%; 
+    float: left;
+}
+
+.right-box {
+    width: 48%;
+    float: left;
+    padding-left: 50px;
+}
+
+
+
+
+input, select, textarea {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+}
+
+#show-description,
+#show-details {
+    width: 100%;
+    float: left;
+}
+
+#show-details {
+    margin-top: 20px;
+}
+
+#back-to-shows-button {
+    background-color: #666666;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+}
+
+#show_name {
+    font-weight: lighter;
+    padding: 20px;
+}

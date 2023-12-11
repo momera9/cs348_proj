@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Show</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'add_show_style.css') }}" />
+    <link rel="icon" href="{{ url_for('static', filename = 'tv_logo.jpg') }}" type="image/jpg" />
+  </head>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const statusSelect = document.getElementById('status');
+        const finishDateWrapper = document.getElementById('finish_date_wrapper');
+
+        function updateFinishDateDisplay() {
+            if (statusSelect.value === 'watching') {
+                finishDateWrapper.style.display = 'none';
+            } else {
+                finishDateWrapper.style.display = 'block';
+            }
+        }
+
+        updateFinishDateDisplay();
+        statusSelect.addEventListener('change', updateFinishDateDisplay);
+    });
+  </script>
+  <body>
+    <div id="header">
+      <img src="{{ url_for('static', filename = 'tv_logo.jpg') }}" alt="Watch-list Logo" />
+      <h1 id="watchlist-title">Watch-list</h1>
+    </div>
+
+    <div id="divider-bar">
+      <div id="show-name">Edit Show</div>
+      <div>
+        <a href="/" id="back-to-shows-button">Back to Shows</a>
+      </div>
+    </div>
+
+    <div class="container">
+      <div id="show-description">
+        <form method="POST" action="/edit_show/{{ show[0] }}">
+          <div class="left-box">
+            <label for="show_name">Show Name:</label>
+            <div id="show_name">{{ show[1] }}</div>
+
+            <div class="form-group">
+              <label for="status">Status:</label>
+              <select name="status" id="status" required>
+                <option value="finished" {% if show[4] == 'finished' %}selected{% endif %}>Finished</option>
+                <option value="watching" {% if show[4] == 'watching' %}selected{% endif %}>Watching</option>
+              </select>
+            </div>
+
+
+            <div id="start_date_wrapper">
+              <label for="start_date">Start Date:</label>
+              <input type="date" name="start_date" id="start_date" value="{{ show[2]|default('') }}">
+            </div>
+
+            <div id="finish_date_wrapper">
+              <label for="finish_date">Finish Date:</label>
+              <input type="date" name="finish_date" id="finish_date" value="{{ show[3]|default('') }}">
+            </div>
+
+            <div id="genre_wrapper">
+              <label for="genre">Genre:</label>
+              <select name="genre" id="genre" required>
+                <option value="Other" {% if show[5] == 'Other' %}selected{% endif %}>Other</option>
+                <option value="Drama" {% if show[5] == 'Drama' %}selected{% endif %}>Drama</option>
+                <option value="Comedy" {% if show[5] == 'Comedy' %}selected{% endif %}>Comedy</option>
+                <option value="Action" {% if show[5] == 'Action' %}selected{% endif %}>Action</option>
+                <option value="Reality" {% if show[5] == 'Reality' %}selected{% endif %}>Reality</option>
+                <option value="Medical" {% if show[5] == 'Medical' %}selected{% endif %}>Medical</option>                
+              </select>
+            </div>
+          </div>
+          <div class="right-box">
+            <div id="user_rating_wrapper">
+                <label for="user_rating">User Rating Out Of 10:</label>
+                <select name="user_rating" id="user_rating" required>
+                    <option value="N/A" {% if show[7] == 'N/A' %}selected{% endif %}>N/A</option>
+                    <option value="1" {% if show[7] == 1 %}selected{% endif %}>1</option>
+                    <option value="2" {% if show[7] == 2 %}selected{% endif %}>2</option>
+                    <option value="3" {% if show[7] == 3 %}selected{% endif %}>3</option>
+                    <option value="4" {% if show[7] == 4 %}selected{% endif %}>4</option>
+                    <option value="5" {% if show[7] == 5 %}selected{% endif %}>5</option>
+                    <option value="6" {% if show[7] == 6 %}selected{% endif %}>6</option>
+                    <option value="7" {% if show[7] == 7 %}selected{% endif %}>7</option>
+                    <option value="8" {% if show[7] == 8 %}selected{% endif %}>8</option>
+                    <option value="9" {% if show[7] == 9 %}selected{% endif %}>9</option>
+                    <option value="10" {% if show[7] == 10 %}selected{% endif %}>10</option>
+                </select>
+            </div> 
+            <label for="user_notes">User Notes:</label>
+            <textarea id="user_notes" name="user_notes" rows="20" placeholder="Enter your thoughts here...">{{ show[8]|default('') }}</textarea>            
+            <button type="submit" id="edit-show-button">Edit Show</button>
+          </div>
+        </form>
+        
+      </div>
+    </div>
+  </body>
+</html>

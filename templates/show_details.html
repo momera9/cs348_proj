@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show Details</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='show_details_style.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='tv_logo.jpg') }}" type="image/jpg">
+</head>
+<body>
+    <div id="header">
+        <img src="{{ url_for('static', filename='tv_logo.jpg') }}" alt="Watch-list Logo">
+        <h1 id="watchlist-title">Watch-list</h1>
+    </div>
+
+    <div id="divider-bar">
+        <div id="show-name">{{ show[1] }}</div>
+        <div>
+            <a href="/edit_show/{{ show[0] }}" id="edit-show-button">Edit Show</a>
+            <a href="/delete_show/{{ show[0] }}" id="delete-show-button" onclick="return confirm('Are you sure you want to delete this show?')">Delete Show</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="poster-container">
+            <img src="{{ show[9] }}" alt="{{ show[1] }} Poster" class="show-poster">
+        </div>
+        <div id="show-description">
+            <p><strong>Start Date:</strong> {{ show[2] }}</p>
+            <div>
+            {% if show[4] == 'watching' %}
+                <p><strong>Finish Date:</strong> Still watching</p>
+            {% else %}
+                <p><strong>Finish Date:</strong> {{ show[3] }}</p>
+            {% endif %}
+            </div>
+            <p><strong>Genre:</strong> {{ show[5] }}</p>
+            <p><strong>Description:</strong> {{ show[6] }}</p>
+        </div>
+
+        <div id="show-details">
+            <div id="user-rating">
+                <p><strong>User Rating:</strong> {{ show[7] }} / 10</p>
+            </div>
+
+            <div id="user-notes">
+                <p><strong>User Notes:</strong> {{ show[8] }} </p>
+            </div>
+        </div>
+    </div>
+
+    <a href="/" id="back-to-shows-button">Back to Shows</a>
+</body>
+</html>

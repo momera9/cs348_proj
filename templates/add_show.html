@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add a New Show</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='add_show_style.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='tv_logo.jpg') }}" type="image/jpg">
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById("show_name").addEventListener("input", function() {
+                const showName = this.value;
+                fetch(`/get_show_details/${showName}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const descriptionInput = document.getElementById("show_description");
+                        if (descriptionInput) {
+                            descriptionInput.value = data.description || "";
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            });
+        });
+    </script>    
+</head>
+<body>
+    <div id="header">
+        <img src="{{ url_for('static', filename='tv_logo.jpg') }}" alt="Watch-list Logo">
+        <h1 id="watchlist-title">Watch-list</h1>
+    </div>
+    
+    <div id="divider-bar">
+        <div id="show-name">Add a New Show</div>
+        <div>
+            <a href="/" id="back-to-shows-button">Back to Shows</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div id="show-description">
+            <form method="POST" action="/add_show">
+                <div class="left-box">
+                    <label for="show_name">Show Name:</label>
+                    <input type="text" name="show_name" id="show_name" required>
+
+                    <div class="form-group">
+                        <label for="status">Status:</label>
+                        <select name="status" id="status" required>
+                            <option value="finished">Finished</option>
+                            <option value="watching">Watching</option>
+                        </select>
+                    </div>
+
+                    <div id="start_date_wrapper">
+                        <label for="start_date">Start Date:</label>
+                        <input type="date" name="start_date" id="start_date">
+                    </div>
+
+                    <div id="finish_date_wrapper">
+                        <label for="finish_date">Finish Date:</label>
+                        <input type="date" name="finish_date" id="finish_date">
+                    </div>
+
+                    <div id="genre_wrapper">
+                        <label for="genre">Genre:</label>
+                        <select name="genre" id="genre" required>
+                            <option value="Other">Other</option>
+                            <option value="Drama">Drama</option>
+                            <option value="Comedy">Comedy</option>
+                            <option value="Action">Action</option>
+                            <option value="Reality">Reality</option>
+                            <option value="Medical">Medical</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="right-box">
+                    <div id="user_rating_wrapper">
+                        <label for="user_rating">User Rating Out Of 10:</label>
+                        <select name="user_rating" id="user_rating" required>
+                            <option value="N/A">N/A</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                        </select>
+                    </div>
+                    <label for="user_notes">User Notes:</label>
+                    <textarea id="user_notes" name="user_notes" rows="20" placeholder="Enter your thoughts here..." ></textarea>
+                    <button type="submit" id="add-show-button">Add Show</button>
+                </div>
+            </form>
+            <script>
+                const statusSelect = document.getElementById("status");
+                const finishDateWrapper = document.getElementById("finish_date_wrapper");
+    
+                statusSelect.addEventListener("change", function() {
+                    if (statusSelect.value === "watching") {
+                        finishDateWrapper.style.display = "none";
+                    } else {
+                        finishDateWrapper.style.display = "block";
+                    }
+                });
+            </script>
+        </div>
+    </div>    
+</body>
+</html>

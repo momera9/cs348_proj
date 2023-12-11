@@ -1,0 +1,125 @@
+/* Reset and base styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* Page header styles */
+h1 {
+    text-align: center;
+    background-color: #000000; /* Purple background color */
+    color: #fff;
+    padding: 10px 0;
+    margin: 0;
+    font-family: 'Arial', sans-serif; /* Modern font */
+}
+
+/* Container for content */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Forms */
+form {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+label {
+    font-weight: bold;
+    display: block;
+    margin-top: 10px;
+}
+
+input[type="text"],
+input[type="date"],
+select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+button {
+    background-color: #000000; /* Purple button color */
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Links and buttons */
+a {
+    color: #000000; /* Purple link color */
+    text-decoration: none;
+}
+
+a.back-button {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+}
+
+button.remove-button {
+    background-color: #dc3545; /* Red button color */
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* TV Shows list styles */
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 20px; /* Increased margin for better readability */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left; /* Left-aligned text in boxes */
+}
+
+li .show-name {
+    font-weight: bold;
+}
+
+li .show-status {
+    font-style: italic;
+    margin-left: 10px;
+}
+
+li .show-info b {
+    font-weight: bold; /* Bold "Start Date" and "Finish Date" */
+    display: inline-block;
+    width: 90px; /* Add width to align the values correctly */
+}
+
+/* Status-specific styles */
+li.watching {
+    background-color: #ffd700; /* Yellow background for "Watching" */
+}
+
+li.finished {
+    background-color: #5cb85c; /* Green background for "Finished" */
+}

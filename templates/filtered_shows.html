@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watch-list</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='homepage_style.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='tv_logo.jpg') }}" type="image/jpg">
+</head>
+<body>
+    <div id="header">
+        <img src="{{ url_for('static', filename='tv_logo.jpg') }}" alt="Watch-list Logo">
+        <h1 id="watchlist-title">Watch-list</h1>
+    </div>
+    
+    <div id="divider-bar">
+        <div id="your-shows">Your Shows</div>
+        <div>
+            <a href="#" id="stats-button" onclick="openStatsPopup()">Statistics</a>
+
+            <a href="/" id="clear-filters-button">Clear Filters</a>
+            <a href="/add_show" id="add-show-button">Add Show</a>
+        </div>
+    </div>
+
+    <div id="stats-popup" class="popup">
+        <div class="popup-content">
+            <span class="close" onclick="closeStatsPopup()">&times;</span>
+            <h2>Filtered Shows Statistics</h2>
+            <div>
+                <p><strong>Average User Rating: </strong>{{ average_rating }}</p>
+            </div>
+            <div>
+                <p><strong>Most Common Genre: </strong>{{ most_common_genre }}</p>
+            </div>
+        </div>
+    </div>
+
+    <ul>
+        {% for show in shows %}
+            <li>
+                <a href="/show_details/{{ show[0] }}" class="show-link">
+                    <div class="show-poster-container">
+                        <img src="{{ show[9] }}" alt="{{ show[1] }} Poster" class="show-poster">
+                    </div>
+                    <div class="show-details">
+                        <p class="show-name">{{ show[1] }}</p>
+                        <p class="show-info"><strong>Start Date: </strong>{{ show[2] }} <strong>| </strong>
+                        {% if show[4] == "watching" %}
+                            <strong>Still Watching</strong>
+                        {% else %}
+                            <strong>Finish Date:</strong> {{ show[3] }}
+                        {% endif %}
+                        </p>
+                    </div>
+                </a>
+            </li>
+        {% endfor %}
+
+    </ul>
+    <script>
+        function openStatsPopup() {
+            document.getElementById('stats-popup').style.display = 'flex';
+        }
+    
+        function closeStatsPopup() {
+            document.getElementById('stats-popup').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watch-list</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='homepage_style.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='tv_logo.jpg') }}" type="image/jpg">
+</head>
+<body>
+    <div id="header">
+        <img src="{{ url_for('static', filename='tv_logo.jpg') }}" alt="Watch-list Logo">
+        <h1 id="watchlist-title">Watch-list</h1>
+    </div>
+    
+    <div id="divider-bar">
+        <div id="your-shows">Your Shows</div>
+        <div>
+            <a href="#" id="filter-button" onclick="openFilterPopup()">Filter</a>
+            <a href="/add_show" id="add-show-button">Add Show</a>
+        </div>
+    </div>
+
+
+    <div id="filter-popup" class="popup">
+        <div class="popup-content">
+            <span class="close" onclick="closeFilterPopup()">&times;</span>
+            <h2>Filter Shows</h2>
+            <div>
+                <label for="genre">Genre:</label>
+                <select id="genre" name="genre">
+                    <option value="all">All</option>
+                    {% for genre in genres %}
+                        <option value="{{ genre }}">{{ genre }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div>
+                <label for="user-rating">User Rating:</label>
+                <select id="user_rating" name="user_rating">
+                    <option value="all">All</option>
+                    {% for rating in ratings %}
+                        <option value="{{ rating }}">{{ rating }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div>
+                <label for="start_date_min">Started Between:</label>
+                <input type="date" id="start_date_min" name="start_date_min">
+                <label for="start_date_max"> and</label>
+                <input type="date" id="start_date_max" name="start_date_max">
+            </div>
+            <div>
+                <label for="end_date_min">Finished Between:</label>
+                <input type="date" id="end_date_min" name="end_date_min">
+                <label for="end_date_max"> and</label>
+                <input type="date" id="end_date_max" name="end_date_max">
+            </div>
+
+            <div>
+                <label for="status">Status:</label>
+                <select id="status" name="status">
+                    <option value="all">All</option>
+                    <option value="watching">Watching</option>
+                    <option value="finished">Finished</option>
+                </select>
+            </div>
+
+            <button onclick="applyFilters()">Apply Filters</button>
+        </div>
+    </div>
+
+    <ul>
+        {% for show in shows %}
+            <li>
+                <a href="/show_details/{{ show[0] }}" class="show-link">
+                    <div class="show-poster-container">
+                        <img src="{{ show[9] }}" alt="{{ show[1] }} Poster" class="show-poster">
+                    </div>
+                    <div class="show-details">
+                        <p class="show-name">{{ show[1] }}</p>
+                        <p class="show-info"><strong>Start Date: </strong>{{ show[2] }} <strong>| </strong>
+                        {% if show[4] == "watching" %}
+                            <strong>Still Watching</strong>
+                        {% else %}
+                            <strong>Finish Date:</strong> {{ show[3] }}
+                        {% endif %}
+                        </p>
+                    </div>
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+
+
+<script>
+    function openFilterPopup() {
+        document.getElementById('filter-popup').style.display = 'flex';
+    }
+
+    function closeFilterPopup() {
+        document.getElementById('filter-popup').style.display = 'none';
+    }
+
+    function applyFilters() {
+        const genre = document.getElementById('genre').value;
+        const userRating = document.getElementById('user_rating').value;
+        const status = document.getElementById('status').value;
+        const startDateMin = document.getElementById('start_date_min').value;
+        const startDateMax = document.getElementById('start_date_max').value;
+        const endDateMin = document.getElementById('end_date_min').value;
+        const endDateMax = document.getElementById('end_date_max').value;
+
+    
+        console.log('Applying filters:', genre, userRating, status);
+    
+        fetch("/filter_shows", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: new URLSearchParams({
+                "genre": genre,
+                "user_rating": userRating,
+                "status": status,
+                "start_date_min": startDateMin,
+                "start_date_max": startDateMax,
+                "end_date_min": endDateMin,
+                "end_date_max": endDateMax,
+            }),
+        })
+        .then(response => {
+            console.log('Response status:', response.status);
+            return response.json();
+        })
+        .then(data => {
+            console.log('Data from server:', data);
+            updatePageContent(data);
+        })
+        .catch(error => {
+            console.error("Error applying filters:", error);
+        });
+    
+        closeFilterPopup();
+    }
+    
+
+    function updatePageContent(filteredData) {
+ 
+        const filteredDataJSON = JSON.stringify(filteredData);
+
+        const form = document.createElement('form');
+        form.action = '/filtered_page';  // Adjust the URL to the route that handles the filtered page
+        form.method = 'post';
+
+        const dataInput = document.createElement('input');
+        dataInput.type = 'hidden';
+        dataInput.name = 'filtered_data';
+        dataInput.value = filteredDataJSON;
+
+        const userRatings = filteredData.map(show => show.user_rating);
+        const averageRating = calculateAverage(userRatings);
+
+        const averageRatingInput = document.createElement('input');
+        averageRatingInput.type = 'hidden';
+        averageRatingInput.name = 'average_rating';
+        averageRatingInput.value = averageRating;
+
+        form.appendChild(dataInput);
+        form.appendChild(averageRatingInput);
+        document.body.appendChild(form);
+        form.submit();
+    }
+
+    function calculateAverage(numbers) {
+        if (numbers.length === 0) return 0;
+        const sum = numbers.reduce((acc, num) => acc + num, 0);
+        return sum / numbers.length;
+    }
+</script>
+</body>
+</html>

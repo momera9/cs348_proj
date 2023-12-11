@@ -1,0 +1,99 @@
+/* show_details_style.css */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* Add a new style for the poster container */
+.poster-container {
+    width: 20%; /* Adjust the width as needed */
+    float: left;
+    padding-left: 5px;
+    padding-top: 5px;
+    padding-right: 30px;
+}
+
+.show-poster {
+    max-width: 100%; /* Adjust the maximum width as needed */
+    height: auto; /* Maintain aspect ratio */
+}
+
+#header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: #ffffff;
+    padding: 10px;
+}
+
+#header img {
+    max-height: 100px; /* Adjust the size as needed */
+}
+
+#watchlist-title {
+    color: #000000;
+    margin-left: 20px; /* Adjust the margin as needed */
+}
+
+#divider-bar {
+    display: flex;
+    justify-content: space-between;
+    background-color: #e0e0e0; /* Adjust the color as needed */
+    padding: 10px;
+}
+
+#show-name {
+    color: #000000;
+    font-weight: bold;
+}
+
+#edit-show-button,
+#delete-show-button {
+    background-color: #666666;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+#back-to-shows-button {
+    background-color: #666666;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+}
+
+.container {
+    max-width: 1;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+#show-description {
+    width: 40%; /* Adjust the width as needed */
+    float: left;
+}
+
+#show-details {
+    width: 35%; /* Adjust the width as needed */
+    float: right;
+}
+
+#user-rating,
+#user-notes {
+    margin-top: 20px;
+}
+
+/* Add more styles as needed for the show description and show details sections */
